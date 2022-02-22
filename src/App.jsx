@@ -1,6 +1,6 @@
 import React from "react";
 import GlobalStyle from "./GlobalStyle";
-import { NativeBar,NativeFooter } from "./component";
+import { NativeBar, NativeFooter } from "./component";
 import { MapPage, Search, Info, Splash } from "./page/index";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
@@ -17,8 +17,8 @@ const App = () => {
 					<Route path="search" element={<Search />} />
 				</Routes>
 			</Router>
-      <NativeFooter />
+			<NativeFooter />
 		</>
 	);
-
+};
 export default App;

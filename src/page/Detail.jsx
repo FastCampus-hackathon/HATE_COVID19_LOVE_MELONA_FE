@@ -5,9 +5,30 @@ import { ReactComponent as Mappin } from "../assets/img/Mappin.svg";
 import { ReactComponent as Phone } from "../assets/img/Phone.svg";
 import { ReactComponent as Question } from "../assets/img/Question.svg";
 import { ReactComponent as Medicons } from "../assets/img/Medicons.svg";
+import { useLocation } from "react-router-dom";
+import convertDistance from "../utils/convertDistance";
+import getDistance from "../utils/getDistance";
 
 const Detail = () => {
-	return (
+	const { state } = useLocation();
+	const {
+		address,
+		category,
+		isClinic,
+		isContact,
+		isPcr,
+		isRat,
+		latitude,
+		longitude,
+		name,
+		sat,
+		status,
+		subject,
+		sun,
+		tel,
+		week,
+	} = state.data;
+	return state ? (
 		<Background>
 			<div className="infoWrap">
 				<InfoBg className="info">
@@ -15,24 +36,37 @@ const Detail = () => {
 						<More className="more" />
 					</div>
 					<Tag>
-						<div className="open">진료중</div>
-						<div className="phoneCare">코로나 전화진료</div>
-						<div className="AntigenRapidTest">
-							신속항원검사
-							<Question />
-						</div>
+						{status === "진료중" && <div className="open">{status}</div>}
+						{isContact && <div className="phoneCare">코로나 전화진료</div>}
+						{isRat && (
+							<div className="AntigenRapidTest">
+								신속항원검사
+								<Question />
+							</div>
+						)}
 					</Tag>
 					<Clinic className="clinicDetail">
 						<h3>
-							봉천연세가정의학과의원
+							{name}
 							<Medicons />
 						</h3>
 						<div className="timeAndDistance">
 							<div className="time">
 								<strong>오늘</strong>
-								10:00 - 19:00
+								{week}
 							</div>
-							<div className="distance">현재 위치에서 578m | 이비인후과</div>
+							<div className="distance">
+								현재 위치에서{" "}
+								{convertDistance(
+									getDistance(
+										state.latlng.lat,
+										state.latlng.long,
+										latitude,
+										longitude
+									)
+								)}{" "}
+								| {subject}
+							</div>
 						</div>
 						<h4>병원정보</h4>
 						<div className="timetableAndLocation">
@@ -44,9 +78,9 @@ const Detail = () => {
 									</div>
 								</div>
 								<div className="right">
-									<div className="weekday">평일 10:00 - 19:00</div>
-									<div className="saturday">토요일 10:00 - 19:00</div>
-									<div className="sundayAndholiday">일요일/공휴일 - 휴무</div>
+									<div className="weekday">평일 {week}</div>
+									<div className="saturday">토요일 {sat}</div>
+									<div className="sundayAndholiday">일요일/공휴일 - {sun}</div>
 									<div></div>
 								</div>
 							</div>
@@ -58,20 +92,20 @@ const Detail = () => {
 									</div>
 								</div>
 								<div className="right">
-									<div className="address">
-										서울특별시 서초구 동작대로 118 3층 301호~303호
-									</div>
+									<div className="address">{address}</div>
 								</div>
 							</div>
 						</div>
 					</Clinic>
-					<button className="phoneConnect">
+					<a className="phoneConnect" href={`tel:${tel}`}>
 						<Phone />
 						전화하기
-					</button>
+					</a>
 				</InfoBg>
 			</div>
 		</Background>
+	) : (
+		<h1>404 NOT FOUND</h1>
 	);
 };
 
@@ -95,8 +129,8 @@ const IconMenu = styled.div`
 const InfoBg = styled.section`
 	width: 100%;
 	height: 465px;
-	bottom: -197px;
-	/* bottom: 0; */
+	/* bottom: -197px; */
+	bottom: 0;
 	left: 0;
 	background-color: #fff;
 	box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.2);
@@ -107,6 +141,9 @@ const InfoBg = styled.section`
 		text-align: center;
 	}
 	.phoneConnect {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		height: 52px;
 		width: 320px;
 		border-radius: 6px;

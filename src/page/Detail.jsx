@@ -11,12 +11,10 @@ import getDistance from "../utils/getDistance";
 
 const Detail = () => {
 	const { state } = useLocation();
+
 	const {
 		address,
-		category,
-		isClinic,
 		isContact,
-		isPcr,
 		isRat,
 		latitude,
 		longitude,
@@ -80,7 +78,7 @@ const Detail = () => {
 								<div className="right">
 									<div className="weekday">평일 {week}</div>
 									<div className="saturday">토요일 {sat}</div>
-									<div className="sundayAndholiday">일요일/공휴일 - {sun}</div>
+									<div className="sundayAndholiday">일요일/공휴일 {sun}</div>
 									<div></div>
 								</div>
 							</div>
@@ -129,8 +127,8 @@ const IconMenu = styled.div`
 const InfoBg = styled.section`
 	width: 100%;
 	height: 465px;
-	/* bottom: -197px; */
-	bottom: 0;
+	bottom: -197px;
+	/* bottom: 0; */
 	left: 0;
 	background-color: #fff;
 	box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.2);

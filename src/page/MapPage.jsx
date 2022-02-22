@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps"; // 패키지 불러오기
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -121,7 +121,7 @@ const MapPage = () => {
 							onClick={(e) => {
 								setSelection({ name, type: ClickedHospital });
 								// 누르면 페이지 이동
-								setLocation({ latitude, longitude });
+								setLocation({ lat: latitude, long: longitude });
 								navigate("detail", { state: { data: d, latlng: nowLoca } });
 							}}
 							icon={icon}
@@ -158,18 +158,18 @@ const MapPage = () => {
 							onClick={(e) => {
 								setSelection({ name, type: filtered.type });
 								// 누르면 페이지 이동
-								setLocation({ latitude, longitude });
+								setLocation({ lat: latitude, long: longitude });
 								navigate("detail", { state: { data: d, latlng: nowLoca } });
 							}}
 							icon={icon}
 						/>
 					);
 				})}
-			{location && (
+			{nowLoca && (
 				<Marker
 					key={"current"}
-					position={new navermaps.LatLng(location.lat, location.long)}
-					animation={2}
+					position={new navermaps.LatLng(nowLoca.lat, nowLoca.long)}
+					animation={0}
 					icon={Current}
 				/>
 			)}

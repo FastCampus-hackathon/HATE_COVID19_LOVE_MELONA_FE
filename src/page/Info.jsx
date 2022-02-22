@@ -6,6 +6,7 @@ import { ReactComponent as Icon1 } from "../assets/icon1.svg";
 import { ReactComponent as Icon2 } from "../assets/icon2.svg";
 import { ReactComponent as Icon3 } from "../assets/icon3.svg";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -75,6 +76,7 @@ const InfoImage = styled.div`
 
 const Info = () => {
 	const navigate = useNavigate();
+
 	return (
 		<Container>
 			<Header>

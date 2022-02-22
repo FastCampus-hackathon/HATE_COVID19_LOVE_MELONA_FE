@@ -1,6 +1,6 @@
 import React from "react";
 import GlobalStyle from "./GlobalStyle";
-import { NativeBar } from "./component";
+import { NativeBar, NativeFooter } from "./component";
 import { MapPage } from "./page/index";
 
 const App = () => {
@@ -9,6 +9,7 @@ const App = () => {
       <GlobalStyle />
       <NativeBar />
       <MapPage />
+      <NativeFooter />
     </>
   );
 };

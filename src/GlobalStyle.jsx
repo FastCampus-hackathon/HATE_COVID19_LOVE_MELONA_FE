@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 html {
-  font-size: 0.267vw;
+  font-size: 0.278vw;
   color: #000;
   font-family: Noto Sans;
 }

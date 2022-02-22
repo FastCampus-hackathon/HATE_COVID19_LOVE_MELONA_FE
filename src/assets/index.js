@@ -4,6 +4,7 @@ export { default as Native } from "./native.svg";
 export { default as Footer } from "./native_footer.svg";
 export { default as Search } from "./search.svg";
 export { default as Align } from "./align.svg";
+export { default as Back } from "./back.svg";
 export { default as Shield } from "./shield.svg";
 export { default as Hospital } from "./hospital.svg";
 export { default as Phone } from "./phone.svg";

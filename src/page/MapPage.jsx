@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Input } from "../elements";
 import axios from "axios";
 import $ from "jquery";
 import styled from "styled-components";
@@ -17,6 +19,7 @@ import {
   Minus,
 } from "../assets";
 import { Input, Wrapper, ImageBox } from "../elements";
+import Recognition from "../component/Recognition";
 
 const { naver } = window;
 
@@ -31,6 +34,10 @@ const MapPage = () => {
   const [open, setOpen] = useState(false);
   const [pcr, setPcr] = useState(false);
   const [phone, setPhone] = useState(false);
+  
+  // by Jinsoo
+	const navigate = useNavigate();
+	const [recogToggle, setRecogToggle] = useState(false);
 
   const getData = () => {
     const url = "https://hello-hackathon-server.herokuapp.com/v1/hospital/list";
@@ -229,7 +236,7 @@ const MapPage = () => {
           width: "100%",
           height: "calc(100vh - 48em)",
         }}>
-        <Input width='328em' />
+        <Input width="343em" _click={() => navigate("/search")} />
         <Container>
           <Wrapper
             image={Check}
@@ -331,6 +338,20 @@ const MapPage = () => {
             <ImageBox image={Minus} width='22.58em' />
           </Down>
         </BtnContainer>
+      {!recogToggle && (
+                <div
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    backgroundColor: "red",
+                    position: "fixed",
+                    bottom: 0,
+                    zIndex: 2,
+                  }}
+                  onClick={() => setRecogToggle(true)}
+                />
+              )}
+				<Recognition state={recogToggle} set={setRecogToggle} />
       </div>
     </>
   );

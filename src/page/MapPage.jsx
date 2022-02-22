@@ -75,10 +75,15 @@ const MapPage = () => {
 	};
 
 	useEffect(() => {
+		getLocation();
 		if (!location) {
 			map = new naver.maps.Map("map", {
 				center: new naver.maps.LatLng(37.5666805, 126.9784147),
 				zoom: level,
+				logoControl: false,
+				mapDataControl: false,
+				scaleControl: false,
+				mapTypeControl: false,
 			});
 		}
 		getData();
@@ -91,6 +96,9 @@ const MapPage = () => {
 			map = new naver.maps.Map("map", {
 				center: new naver.maps.LatLng(lat, long),
 				zoom: level,
+				logoControl: false,
+				mapDataControl: false,
+				scaleControl: false,
 			});
 
 			var defaultMarker = new naver.maps.Marker({
@@ -146,6 +154,9 @@ const MapPage = () => {
 			map = new naver.maps.Map("map", {
 				center: new naver.maps.LatLng(37.5666805, 126.9784147),
 				zoom: level,
+				logoControl: false,
+				mapDataControl: false,
+				scaleControl: false,
 			});
 
 			data.forEach((data) => {
@@ -172,6 +183,9 @@ const MapPage = () => {
 		map = new naver.maps.Map("map", {
 			center: new naver.maps.LatLng(37.5666805, 126.9784147),
 			zoom: level,
+			logoControl: false,
+			mapDataControl: false,
+			scaleControl: false,
 		});
 
 		data.forEach((data) => {
@@ -197,6 +211,9 @@ const MapPage = () => {
 		map = new naver.maps.Map("map", {
 			center: new naver.maps.LatLng(lat, long),
 			zoom: level,
+			logoControl: false,
+			mapDataControl: false,
+			scaleControl: false,
 		});
 
 		var defaultMarker = new naver.maps.Marker({
@@ -232,7 +249,7 @@ const MapPage = () => {
 				id="map"
 				style={{
 					width: "100%",
-					height: "calc(100vh - 48em)",
+					height: "calc(100vh - 24em)",
 				}}
 			>
 				<Input width="343em" _click={() => navigate("/search")} />
@@ -297,9 +314,11 @@ const MapPage = () => {
 						}}
 					/>
 				</Container>
-				<Mic>
-					<ImageBox width="30em" height="30em" image={Micro} />
-				</Mic>
+				{!recogToggle && (
+					<Mic onClick={() => setRecogToggle(true)}>
+						<ImageBox width="30em" height="30em" image={Micro} />
+					</Mic>
+				)}
 				<FindLocation
 					onClick={() => {
 						getLocation();
@@ -307,7 +326,7 @@ const MapPage = () => {
 				>
 					<ImageBox width="30em" height="30em" image={Cross} />
 				</FindLocation>
-				<MoreInfo>
+				<MoreInfo onClick={() => navigate("/info")}>
 					<ImageBox
 						position="absolute"
 						left="5em"
@@ -340,19 +359,6 @@ const MapPage = () => {
 						<ImageBox image={Minus} width="22.58em" />
 					</Down>
 				</BtnContainer>
-				{!recogToggle && (
-					<div
-						style={{
-							width: "100px",
-							height: "100px",
-							backgroundColor: "red",
-							position: "fixed",
-							bottom: 0,
-							zIndex: 2,
-						}}
-						onClick={() => setRecogToggle(true)}
-					/>
-				)}
 				<Recognition state={recogToggle} set={setRecogToggle} />
 			</div>
 		</>
@@ -362,18 +368,19 @@ const MapPage = () => {
 export default MapPage;
 
 const Container = styled.div`
-  max-width: 342em;
-  overflow-y: auto;
-  display: flex;
-  padding: 20em 0 20em 0;
-  z-index: 10;
-  position: absolute;
-  top: 70.5em;
-  left: 18em;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+	max-width: 342em;
+	overflow-y: auto;
+	display: flex;
+	padding: 20em 0 20em 0;
+	z-index: 10;
+	position: absolute;
+	top: 70.5em;
+	left: 18em;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	&::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera*/
+	}
 `;
 
 const Mic = styled.div`
@@ -387,7 +394,7 @@ const Mic = styled.div`
 	box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
 	z-index: 10;
 	position: absolute;
-	bottom: 43.75em;
+	bottom: 30em;
 	right: 16em;
 `;
 
@@ -411,7 +418,7 @@ const MoreInfo = styled.div`
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 10;
 	position: absolute;
-	bottom: 42em;
+	bottom: 30em;
 	left: 18em;
 	border-radius: 10em;
 	display: flex;
@@ -421,7 +428,7 @@ const MoreInfo = styled.div`
 
 const Typo = styled.p`
 	color: #2c4eb2;
-	font-family: Noto Sans;
+	font-family: "Noto Sans KR";
 	font-size: 18rem;
 	font-style: bold;
 	font-weight: 700;

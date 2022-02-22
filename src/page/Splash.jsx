@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as SplashMap } from "../assets/splash1.svg";
 import { ReactComponent as SplashPeople } from "../assets/splash2.svg";
 import { ReactComponent as SplashLight } from "../assets/splash3.svg";
-import { ReactComponent as Mic } from "../assets/mic.svg";
+import { ReactComponent as Mic } from "../assets/permic.svg";
 import { ReactComponent as Geo } from "../assets/geo.svg";
 
 const Background = styled.div`

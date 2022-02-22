@@ -1,8 +1,14 @@
 import React from "react";
 import GlobalStyle from "./GlobalStyle";
 import { NativeBar } from "./component";
-import { MapPage, Search, Info, Splash } from "./page/index";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { MapPage, Search, Info, Splash, Detail } from "./page/index";
+import {
+	Route,
+	BrowserRouter as Router,
+	Routes,
+	Outlet,
+} from "react-router-dom";
+import styled from "styled-components";
 
 const App = () => {
 	return (
@@ -12,7 +18,17 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route path="/" element={<Splash />} />
-					<Route path="home" element={<MapPage />} />
+					<Route
+						path="home"
+						element={
+							<>
+								<MapPage />
+								<Outlet />
+							</>
+						}
+					>
+						<Route path="detail" element={<Detail />} />
+					</Route>
 					<Route path="info" element={<Info />} />
 					<Route path="search" element={<Search />} />
 				</Routes>

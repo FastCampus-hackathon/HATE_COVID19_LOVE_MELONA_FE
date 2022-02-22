@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import {
@@ -35,6 +35,8 @@ const MapPage = () => {
 
 	// by Jinsoo
 	const navigate = useNavigate();
+	const { pathname } = useLocation();
+	const includesDetail = pathname.includes("detail");
 	const [recogToggle, setRecogToggle] = useState(false);
 
 	const getData = () => {
@@ -249,7 +251,7 @@ const MapPage = () => {
 				id="map"
 				style={{
 					width: "100%",
-					height: "calc(100vh - 24em)",
+					height: `calc(100vh - ${includesDetail ? "200em" : "24em"})`,
 				}}
 			>
 				<Input width="343em" _click={() => navigate("/search")} />
@@ -315,7 +317,7 @@ const MapPage = () => {
 					/>
 				</Container>
 				{!recogToggle && (
-					<Mic onClick={() => setRecogToggle(true)}>
+					<Mic onClick={() => setRecogToggle(true)} state={includesDetail}>
 						<ImageBox width="30em" height="30em" image={Micro} />
 					</Mic>
 				)}
@@ -324,7 +326,7 @@ const MapPage = () => {
 						getLocation();
 					}}
 				>
-					<ImageBox width="30em" height="30em" image={Cross} />
+					<ImageBox width="26em" height="26em" image={Cross} />
 				</FindLocation>
 				<MoreInfo onClick={() => navigate("/info")}>
 					<ImageBox
@@ -394,7 +396,7 @@ const Mic = styled.div`
 	box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
 	z-index: 10;
 	position: absolute;
-	bottom: 30em;
+	bottom: ${(props) => (props.state ? "105em" : "35em")};
 	right: 16em;
 `;
 
@@ -407,7 +409,7 @@ const FindLocation = styled.div`
 	width: 52em;
 	border-radius: 10em;
 	position: absolute;
-	bottom: 108em;
+	bottom: 105em;
 	left: 18em;
 	background-color: #2c4eb2;
 `;
@@ -418,7 +420,7 @@ const MoreInfo = styled.div`
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 10;
 	position: absolute;
-	bottom: 30em;
+	bottom: 35em;
 	left: 18em;
 	border-radius: 10em;
 	display: flex;
@@ -441,7 +443,7 @@ const BtnContainer = styled.div`
 	flex-direction: column;
 	z-index: 10;
 	position: absolute;
-	bottom: 172em;
+	bottom: 170em;
 	left: 18em;
 `;
 

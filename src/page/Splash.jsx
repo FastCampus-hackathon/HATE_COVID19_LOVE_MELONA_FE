@@ -5,6 +5,7 @@ import { ReactComponent as SplashPeople } from "../assets/splash2.svg";
 import { ReactComponent as SplashLight } from "../assets/splash3.svg";
 import { ReactComponent as Mic } from "../assets/permic.svg";
 import { ReactComponent as Geo } from "../assets/geo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Background = styled.div`
 	width: 100%;
@@ -194,6 +195,7 @@ const Button = styled.div`
 
 const Splash = () => {
 	const [modal, setModal] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -224,7 +226,7 @@ const Splash = () => {
 								<PermissionDesc>주변시설 검색 시 사용</PermissionDesc>
 							</PermissionTextBox>
 						</PermissionBox>
-						<Button>다음</Button>
+						<Button onClick={() => navigate("home")}>다음</Button>
 					</ModalContainer>
 				</Background>
 			)}

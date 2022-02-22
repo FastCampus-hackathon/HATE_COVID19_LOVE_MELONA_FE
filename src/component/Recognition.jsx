@@ -14,7 +14,7 @@ const Background = styled.div`
 	position: fixed;
 	background: ${(props) =>
 		props.state ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.0);"};
-	z-index: ${(props) => (props.state ? 11 : 0)};
+	z-index: ${(props) => (props.state ? 102 : 0)};
 	top: 0;
 	display: flex;
 	justify-content: center;
@@ -29,7 +29,7 @@ const Container = styled.div`
 	bottom: ${(props) => (props.state ? "0px" : "-260px")};
 	transition: bottom 0.5s;
 	background-color: white;
-	z-index: 11;
+	z-index: 102;
 
 	display: flex;
 	flex-direction: column;

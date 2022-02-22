@@ -8,98 +8,99 @@ import { ReactComponent as Medicons } from "../assets/img/Medicons.svg";
 import { useLocation } from "react-router-dom";
 import convertDistance from "../utils/convertDistance";
 import getDistance from "../utils/getDistance";
+import { useState } from "react";
 
 const Detail = () => {
 	const { state } = useLocation();
 
-	const {
-		address,
-		isContact,
-		isRat,
-		latitude,
-		longitude,
-		name,
-		sat,
-		status,
-		subject,
-		sun,
-		tel,
-		week,
-	} = state.data;
+	const [isClick, setStyle] = useState(false);
+
+	const onClick = () => {
+		setStyle((isClick) => !isClick);
+	};
+
 	return state ? (
-		<Background>
+		<Background state={isClick}>
 			<div className="infoWrap">
-				<InfoBg className="info">
-					<div className="dargArea">
-						<More className="more" />
-					</div>
-					<Tag>
-						{status === "진료중" && <div className="open">{status}</div>}
-						{isContact && <div className="phoneCare">코로나 전화진료</div>}
-						{isRat && (
-							<div className="AntigenRapidTest">
-								신속항원검사
-								<Question />
-							</div>
-						)}
-					</Tag>
-					<Clinic className="clinicDetail">
-						<h3>
-							{name}
-							<Medicons />
-						</h3>
-						<div className="timeAndDistance">
-							<div className="time">
-								<strong>오늘</strong>
-								{week}
-							</div>
-							<div className="distance">
-								현재 위치에서{" "}
-								{convertDistance(
-									getDistance(
-										state.latlng.lat,
-										state.latlng.long,
-										latitude,
-										longitude
-									)
-								)}{" "}
-								| {subject}
-							</div>
+				<DragWrap className="dragWrap">
+					<InfoBg className={isClick ? "clicked" : "info"}>
+						<div className="dargArea" onClick={() => onClick()}>
+							<More className={isClick ? "degMore" : "more"} />
 						</div>
-						<h4>병원정보</h4>
-						<div className="timetableAndLocation">
-							<div className="timetable">
-								<div className="left">
-									<div className="leftCont">
-										<Clock />
-										진료시간
+						<Tag>
+							{state.data.status === "진료중" && (
+								<div className="open">{state.data.status}</div>
+							)}
+							{state.data.isContact && (
+								<div className="phoneCare">코로나 전화진료</div>
+							)}
+							{state.data.isRat && (
+								<div className="AntigenRapidTest">
+									신속항원검사
+									<Question />
+								</div>
+							)}
+						</Tag>
+						<Clinic className="clinicDetail">
+							<h3>
+								{state.data.name}
+								<Medicons />
+							</h3>
+							<div className="timeAndDistance">
+								<div className="time">
+									<strong>오늘</strong>
+									{state.data.week}
+								</div>
+								<div className="distance">
+									현재 위치에서{" "}
+									{convertDistance(
+										getDistance(
+											state.latlng.lat,
+											state.latlng.long,
+											state.data.latitude,
+											state.data.longitude
+										)
+									)}{" "}
+									| {state.data.subject}
+								</div>
+							</div>
+							<h4>병원정보</h4>
+							<div className="timetableAndLocation">
+								<div className="timetable">
+									<div className="left">
+										<div className="leftCont">
+											<Clock />
+											진료시간
+										</div>
+									</div>
+									<div className="right">
+										<div className="weekday">평일 {state.data.week}</div>
+										<div className="saturday">토요일 {state.data.sat}</div>
+										<div className="sundayAndholiday">
+											일요일/공휴일 {state.data.sun}
+										</div>
+										<div></div>
 									</div>
 								</div>
-								<div className="right">
-									<div className="weekday">평일 {week}</div>
-									<div className="saturday">토요일 {sat}</div>
-									<div className="sundayAndholiday">일요일/공휴일 {sun}</div>
-									<div></div>
-								</div>
-							</div>
-							<div className="location">
-								<div className="left">
-									<div className="leftCont">
-										<Mappin />
-										위치
+								<div className="location">
+									<div className="left">
+										<div className="leftCont">
+											<Mappin />
+											위치
+										</div>
+									</div>
+									<div className="right">
+										<div className="address">{state.data.address}</div>
 									</div>
 								</div>
-								<div className="right">
-									<div className="address">{address}</div>
-								</div>
 							</div>
-						</div>
-					</Clinic>
-					<a className="phoneConnect" href={`tel:${tel}`}>
-						<Phone />
-						전화하기
-					</a>
-				</InfoBg>
+						</Clinic>
+						<a className="phoneConnect" href={`tel:${state.data.tel}`}>
+							<Phone />
+							전화하기
+						</a>
+					</InfoBg>
+				</DragWrap>
 			</div>
 		</Background>
 	) : (
@@ -115,13 +116,10 @@ styled.body`
 	height: 800px;
 	width: 360px;
 `;
-const IconMenu = styled.div`
-	position: absolute;
-	bottom: 241px;
-	margin-bottom: 20px;
-
-	.mikeIcon {
-		margin-left: 220px;
+const DragWrap = styled.div`
+	transition: transform 150ms ease-out;
+	.clicked {
+		bottom: 0px;
 	}
 `;
 const InfoBg = styled.section`
@@ -161,6 +159,11 @@ const InfoBg = styled.section`
 		margin-bottom: -4px;
 	}
 	.more {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	.degMore {
+		transform: rotate(180deg);
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
@@ -282,7 +285,7 @@ const Clinic = styled.div`
 
 const Background = styled.div`
 	width: 100%;
-	/* height: 100%; */
+	height: ${(props) => (props.state ? "100%" : "")};
 	position: fixed;
 	background: rgba(0, 0, 0, 0.4);
 	z-index: 101;

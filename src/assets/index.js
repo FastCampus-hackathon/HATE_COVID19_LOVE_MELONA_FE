@@ -15,3 +15,8 @@ export { default as Think } from "./think.svg";
 export { default as Chev } from "./chevron.svg";
 export { default as Plus } from "./plus.svg";
 export { default as Minus } from "./minus.svg";
+export { default as ClickedHospital } from "./HPCLICK.svg";
+export { default as ClickedPCR } from "./PCRCLICK.svg";
+export { default as ClickedPhone } from "./PHONECLICK.svg";
+export { default as ClickedShield } from "./SHIELDCLICK.svg";
+export { default as ClickedCheck } from "./CHECKCLICK.svg";

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps"; // 패키지 불러오기
 import axios from "axios";
-import $ from "jquery";
 import styled from "styled-components";
 import {
   Hospital,
@@ -9,45 +9,34 @@ import {
   Cross,
   Micro,
   HpMark,
-  HpMarkClicked,
   Current,
   Think,
   Chev,
   Plus,
   Minus,
+  ClickedHospital,
+  ClickedPCR,
+  ClickedPhone,
+  ClickedCheck,
 } from "../assets";
+
 import { Input, Wrapper, ImageBox } from "../elements";
 
-const { naver } = window;
-
-let map;
+const navermaps = window.naver.maps;
 
 const MapPage = () => {
+  const [location, setLocation] = useState(null);
   const [data, setData] = useState([]);
   const [level, setLevel] = useState(15);
   const [filtered, setFilter] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [first, setFirst] = useState(true);
   const [open, setOpen] = useState(false);
   const [pcr, setPcr] = useState(false);
   const [phone, setPhone] = useState(false);
-
-  const getData = () => {
-    const url = "https://hello-hackathon-server.herokuapp.com/v1/hospital/list";
-    axios
-      .get(url)
-      .then(function (response) {
-        setData(response.data.data.slice(0, 300));
-      })
-      .catch(function (error) {
-        throw error;
-      });
-  };
+  const [selection, setSelection] = useState(null);
 
   const getLocation = () => {
     let lat, long;
     if (navigator.geolocation) {
-      // GPS를 지원하면
       navigator.geolocation.getCurrentPosition(
         function (position) {
           lat = position.coords.latitude;
@@ -69,166 +58,114 @@ const MapPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (!location) {
-      map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(37.5666805, 126.9784147),
-        zoom: level,
+  const getData = () => {
+    const url = "https://hello-hackathon-server.herokuapp.com/v1/hospital/list";
+    axios
+      .get(url)
+      .then(function (response) {
+        setData(response.data.data.slice(0, 300));
+      })
+      .catch(function (error) {
+        throw error;
       });
-    }
-    getData();
-  }, []);
-
-  const drawMarker = (type) => {
-    if (location && data.length) {
-      const { lat, long } = location;
-
-      map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(lat, long),
-        zoom: level,
-      });
-
-      var defaultMarker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(lat, long),
-        map: map,
-        icon: {
-          content: `<img src=${Current} draggable="false" unselectable="on" >`,
-          size: new naver.maps.Size(22, 35),
-          anchor: new naver.maps.Point(11, 35),
-        },
-      });
-
-      if (filtered) {
-        filtered.forEach((data) => {
-          const { latitude, longitude } = data;
-
-          if (latitude && longitude) {
-            var defaultMarker = new naver.maps.Marker({
-              position: new naver.maps.LatLng(latitude, longitude),
-              map: map,
-              icon: {
-                content: `<img src=${
-                  type ? type : HpMark
-                } draggable="false" unselectable="on" >`,
-                size: new naver.maps.Size(22, 35),
-                anchor: new naver.maps.Point(11, 35),
-              },
-            });
-          }
-        });
-      } else {
-        data.forEach((data) => {
-          const { latitude, longitude } = data;
-
-          if (latitude && longitude) {
-            var defaultMarker = new naver.maps.Marker({
-              position: new naver.maps.LatLng(latitude, longitude),
-              map: map,
-              icon: {
-                content: `<img src=${
-                  type ? type : HpMark
-                } draggable="false" unselectable="on" >`,
-                size: new naver.maps.Size(22, 35),
-                anchor: new naver.maps.Point(11, 35),
-              },
-            });
-          }
-        });
-      }
-    }
-
-    if (!location && data.length) {
-      map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(37.5666805, 126.9784147),
-        zoom: level,
-      });
-
-      data.forEach((data) => {
-        const { latitude, longitude } = data;
-
-        if (latitude && longitude) {
-          var defaultMarker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(latitude, longitude),
-            map: map,
-            icon: {
-              content: `<img src=${
-                type ? type : HpMark
-              } draggable="false" unselectable="on" >`,
-              size: new naver.maps.Size(22, 35),
-              anchor: new naver.maps.Point(11, 35),
-            },
-          });
-        }
-      });
-    }
   };
 
-  if (first && !location && data.length) {
-    map = new naver.maps.Map("map", {
-      center: new naver.maps.LatLng(37.5666805, 126.9784147),
-      zoom: level,
-    });
-
-    data.forEach((data) => {
-      const { latitude, longitude } = data;
-
-      if (latitude && longitude) {
-        var defaultMarker = new naver.maps.Marker({
-          position: new naver.maps.LatLng(latitude, longitude),
-          map: map,
-          icon: {
-            content: `<img src=${HpMark} draggable="false" unselectable="on" >`,
-            size: new naver.maps.Size(22, 35),
-            anchor: new naver.maps.Point(11, 35),
-          },
-        });
-      }
-    });
+  if (location) {
+    let dd = new navermaps.LatLng({ lat: location.lat, long: location.long });
+    console.log(dd);
   }
-
-  if (first && location && data.length) {
-    const { lat, long } = location;
-
-    map = new naver.maps.Map("map", {
-      center: new naver.maps.LatLng(lat, long),
-      zoom: level,
-    });
-
-    var defaultMarker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(lat, long),
-      map: map,
-      icon: {
-        content: `<img src=${Current} draggable="false" unselectable="on" >`,
-        size: new naver.maps.Size(22, 35),
-        anchor: new naver.maps.Point(11, 35),
-      },
-    });
-
-    data.forEach((data) => {
-      const { latitude, longitude } = data;
-
-      if (latitude && longitude) {
-        var defaultMarker = new naver.maps.Marker({
-          position: new naver.maps.LatLng(latitude, longitude),
-          map: map,
-          icon: {
-            content: `<img src=${HpMark} draggable="false" unselectable="on" >`,
-            size: new naver.maps.Size(22, 35),
-            anchor: new naver.maps.Point(11, 35),
-          },
-        });
-      }
-    });
-  }
+  useEffect(() => {
+    getData();
+  }, [location]);
 
   return (
-    <>
-      <div
-        id='map'
+    <RenderAfterNavermapsLoaded
+      ncpClientId={"74yl0sp2v9"}
+      error={<p>Maps Load Error</p>}
+      loading={<p>Maps Loading...</p>}>
+      <NaverMap
+        mapDivId={"maps-getting-started-uncontrolled"}
         style={{
           width: "100%",
           height: "calc(100vh - 48em)",
+        }}
+        defaultCenter={{ lat: 37.5666805, lng: 126.9784147 }}
+        center={location && new navermaps.LatLng(location.lat, location.long)}
+        animation={4}
+        defaultZoom={level}
+        zoom={level}
+        onCenterChanged={(e) => {
+          console.log(e);
+        }}
+        onClick={() => {
+          setSelection(null);
         }}>
+        {!filtered &&
+          data.length &&
+          data.map((d, idx) => {
+            const { latitude, longitude, name } = d;
+            const findIcon = () => {
+              if (selection) {
+                if (selection.name === name) return selection.type;
+              }
+              return HpMark;
+            };
+            const icon = findIcon();
+            return (
+              <Marker
+                key={idx}
+                position={new navermaps.LatLng(latitude, longitude)}
+                onClick={(e) => {
+                  setSelection({ name, type: ClickedHospital });
+                  // 누르면 페이지 이동
+                }}
+                icon={icon}
+              />
+            );
+          })}
+        {filtered &&
+          filtered.data.map((d, idx) => {
+            const { latitude, longitude, name } = d;
+
+            const findIcon = () => {
+              if (selection) {
+                if (selection.name === name) {
+                  if (selection.type === Check) {
+                    return ClickedCheck;
+                  }
+
+                  if (selection.type === Phone) {
+                    return ClickedPhone;
+                  }
+
+                  if (selection.type === Hospital) {
+                    return ClickedPCR;
+                  }
+                }
+              }
+              return filtered.type;
+            };
+            const icon = findIcon();
+            return (
+              <Marker
+                key={idx}
+                position={new navermaps.LatLng(latitude, longitude)}
+                onClick={(e) => {
+                  setSelection({ name, type: filtered.type });
+                  // 누르면 페이지 이동
+                }}
+                icon={icon}
+              />
+            );
+          })}
+        {location && (
+          <Marker
+            key={"current"}
+            position={new navermaps.LatLng(location.lat, location.long)}
+            animation={2}
+            icon={Current}
+          />
+        )}
         <Input width='328em' />
         <Container>
           <Wrapper
@@ -236,16 +173,14 @@ const MapPage = () => {
             text='진료 중'
             select={open}
             _onClick={() => {
-              setFirst(false);
               if (open) {
                 setOpen(false);
                 setFilter((d) => null);
-                drawMarker();
               } else {
                 setOpen(true);
                 setPcr(false);
                 setPhone(false);
-                drawMarker(Check);
+                setFilter({ data, type: Check });
               }
             }}
           />
@@ -254,19 +189,15 @@ const MapPage = () => {
             text='PCR'
             select={pcr}
             _onClick={() => {
-              setFirst(false);
               if (pcr) {
                 setPcr(false);
                 setFilter((d) => null);
-                drawMarker();
               } else {
                 setOpen(false);
                 setPcr(true);
                 setPhone(false);
                 const p = data.filter((d) => d.isPcr);
-                setFilter(p);
-
-                drawMarker(Hospital);
+                setFilter({ data: p, type: Hospital });
               }
             }}
           />
@@ -275,18 +206,15 @@ const MapPage = () => {
             text='코로나 전화진료'
             select={phone}
             _onClick={() => {
-              setFirst(false);
               if (phone) {
                 setPhone(false);
                 setFilter((d) => null);
-                drawMarker();
               } else {
                 setOpen(false);
                 setPcr(false);
                 setPhone(true);
                 const p = data.filter((d) => d.isContact);
-                setFilter(p);
-                drawMarker(Phone);
+                setFilter({ data: p, type: Phone });
               }
             }}
           />
@@ -331,8 +259,8 @@ const MapPage = () => {
             <ImageBox image={Minus} width='22.58em' />
           </Down>
         </BtnContainer>
-      </div>
-    </>
+      </NaverMap>
+    </RenderAfterNavermapsLoaded>
   );
 };
 

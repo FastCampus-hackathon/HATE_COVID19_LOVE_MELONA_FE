@@ -1,5 +1,5 @@
 function getDistance(lat1, lon1, lat2, lon2) {
-	if (lat1 == lat2 && lon1 == lon2) return 0;
+	if (lat1 === lat2 && lon1 === lon2) return 0;
 
 	var radLat1 = (Math.PI * lat1) / 180;
 	var radLat2 = (Math.PI * lat2) / 180;

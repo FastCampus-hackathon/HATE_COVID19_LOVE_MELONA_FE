@@ -14,7 +14,7 @@ const Background = styled.div`
 	position: fixed;
 	background: ${(props) =>
 		props.state ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.0);"};
-	z-index: ${(props) => (props.state ? 1 : 0)};
+	z-index: ${(props) => (props.state ? 102 : 0)};
 	top: 0;
 	display: flex;
 	justify-content: center;
@@ -29,7 +29,7 @@ const Container = styled.div`
 	bottom: ${(props) => (props.state ? "0px" : "-260px")};
 	transition: bottom 0.5s;
 	background-color: white;
-	z-index: 2;
+	z-index: 102;
 
 	display: flex;
 	flex-direction: column;
@@ -113,7 +113,7 @@ const Recognition = ({ state, set }) => {
 
 	useEffect(() => {
 		if (!listening && transcript) {
-			navigate("search", { state: { keyword: transcript } });
+			navigate("/search", { state: { keyword: transcript } });
 		}
 	}, [transcript, listening, navigate]);
 

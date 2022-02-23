@@ -177,7 +177,10 @@ const MapPage = () => {
 						icon={Current}
 					/>
 				)}
-				<Input width="328em" _click={() => navigate("/search")} />
+				<Input
+					width="328em"
+					_click={() => navigate("/search", { state: { latlng: nowLoca } })}
+				/>
 				<Container>
 					<Wrapper
 						image={Check}
@@ -275,7 +278,11 @@ const MapPage = () => {
 						<ImageBox image={Minus} width="22.58em" />
 					</Down>
 				</BtnContainer>
-				<Recognition state={recogToggle} set={setRecogToggle} />
+				<Recognition
+					state={recogToggle}
+					set={setRecogToggle}
+					latlng={nowLoca}
+				/>
 			</NaverMap>
 			{notiToggle && (
 				<Background>

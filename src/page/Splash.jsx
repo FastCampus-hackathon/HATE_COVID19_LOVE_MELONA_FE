@@ -226,7 +226,11 @@ const Splash = () => {
 								<PermissionDesc>주변시설 검색 시 사용</PermissionDesc>
 							</PermissionTextBox>
 						</PermissionBox>
-						<Button onClick={() => navigate("home")}>다음</Button>
+						<Button
+							onClick={() => navigate("home", { state: { first: true } })}
+						>
+							다음
+						</Button>
 					</ModalContainer>
 				</Background>
 			)}

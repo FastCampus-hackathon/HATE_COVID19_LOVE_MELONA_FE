@@ -101,7 +101,7 @@ const Pulse = styled.div`
 	}
 `;
 
-const Recognition = ({ state, set }) => {
+const Recognition = ({ state, set, latlng }) => {
 	const { transcript, listening } = useSpeechRecognition();
 	const navigate = useNavigate();
 
@@ -113,9 +113,9 @@ const Recognition = ({ state, set }) => {
 
 	useEffect(() => {
 		if (!listening && transcript) {
-			navigate("/search", { state: { keyword: transcript } });
+			navigate("/search", { state: { keyword: transcript, latlng } });
 		}
-	}, [transcript, listening, navigate]);
+	}, [transcript, listening, navigate, latlng]);
 
 	return (
 		<Background state={state}>

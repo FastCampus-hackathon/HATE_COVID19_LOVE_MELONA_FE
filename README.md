@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# HATE COVID19 LOVE MELONA MOBILE WEB
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![merona](https://user-images.githubusercontent.com/94885534/155251519-14480c93-5c00-42a5-ae3e-4ea74914831c.png)
 
-## Available Scripts
+![merona2](https://user-images.githubusercontent.com/94885534/155463324-66532f4e-d46a-4805-ac52-40faa0c5a533.png)
 
-In the project directory, you can run:
+[모바일 페이지 체험하기](https://dreamy-murdock-5f5c4c.netlify.app)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## [2022 Hello Megabyte Hackathon](https://fastcampus-hellomegabytehackathon2022.oopy.io/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2022.02.21 ~ 2022.02.23
 
-### `npm test`
+### TEAM : 코로나 싫어 메로나 좋아
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+FE
 
-### `npm run build`
+- 김힘찬
+- 황성원
+- 변진수
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+BE
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 변진수
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+UX/UI
 
-### `npm run eject`
+- 이다혜
+- 이정민
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 사용 API
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+[코로나 싫어 메로나 좋아 BE 저장소](https://github.com/FastCampus-hackathon/HATE_COVID19_LOVE_MELONA_BE)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. 건강보험심사평가원_코로나19 전화상담 병의원 정보
+2. 건강보험심사평가원_의료기관별상세정보서비스
+3. 건강보험심사평가원_호흡기 전담클리닉 운영 의료기관 정보
+4. 건강보험심사평가원_호흡기 진료 지정 의료기관 정보서비스
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![api](https://user-images.githubusercontent.com/94885534/155463787-ed96556e-945d-4a26-a67e-940a101f20e3.png)

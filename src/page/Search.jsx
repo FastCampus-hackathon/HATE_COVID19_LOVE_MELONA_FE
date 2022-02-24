@@ -87,11 +87,18 @@ const Search = ({ lat = 37.565781556072295, lon = 127.11763398409565 }) => {
 	const [keyword, setKeyword] = useState(state ? state.keyword : "");
 
 	const get = useCallback(async () => {
-		const loaded = await axios(
-			`https://hello-hackathon-server.herokuapp.com/v1/search/${lat}/${lon}`
-		);
-		if (loaded) setResults({ isLoading: false, data: loaded.data.data });
-	}, [lat, lon]);
+		if (state.latlng) {
+			const loaded = await axios(
+				`https://hello-hackathon-server.herokuapp.com/v1/search/${state.latlng.lat}/${state.latlng.long}`
+			);
+			if (loaded) setResults({ isLoading: false, data: loaded.data.data });
+		} else {
+			const loaded = await axios(
+				`https://hello-hackathon-server.herokuapp.com/v1/search/${lat}/${lon}`
+			);
+			if (loaded) setResults({ isLoading: false, data: loaded.data.data });
+		}
+	}, [lat, lon, state.latlng]);
 
 	useEffect(() => {
 		get();

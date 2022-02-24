@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
+import { ReactComponent as Tri } from "../assets/tri.svg";
 import { Input, Wrapper, ImageBox } from "../elements";
 import Recognition from "../component/Recognition";
 import {
@@ -39,10 +40,11 @@ const MapPage = () => {
 
 	// by Jinsoo
 	const navigate = useNavigate();
-	const { pathname } = useLocation();
+	const { pathname, state } = useLocation();
 	const includesDetail = pathname.includes("detail");
 	const [recogToggle, setRecogToggle] = useState(false);
-	const [notiToggle, setNotiToggle] = useState(true);
+	const [notiToggle, setNotiToggle] = useState(state?.first);
+	const [coach, setCoach] = useState(state?.first);
 
 	const getLocation = () => {
 		let lat, long;
@@ -175,7 +177,10 @@ const MapPage = () => {
 						icon={Current}
 					/>
 				)}
-				<Input width="328em" _click={() => navigate("/search")} />
+				<Input
+					width="328em"
+					_click={() => navigate("/search", { state: { latlng: nowLoca } })}
+				/>
 				<Container>
 					<Wrapper
 						image={Check}
@@ -273,9 +278,13 @@ const MapPage = () => {
 						<ImageBox image={Minus} width="22.58em" />
 					</Down>
 				</BtnContainer>
-				<Recognition state={recogToggle} set={setRecogToggle} />
+				<Recognition
+					state={recogToggle}
+					set={setRecogToggle}
+					latlng={nowLoca}
+				/>
 			</NaverMap>
-			{!nowLoca && notiToggle && (
+			{notiToggle && (
 				<Background>
 					<ModalContainer>
 						<ModalTitle>서비스 이용 알림</ModalTitle>
@@ -294,6 +303,21 @@ const MapPage = () => {
 					</ModalContainer>
 				</Background>
 			)}
+			{!notiToggle && coach && (
+				<CoachBackground onClick={() => setCoach(false)}>
+					<Tri style={{ position: "absolute", top: "194px", left: "50px" }} />
+					<TextWindow>서울시에서 지정된 병원을 바로 찾아보세요.</TextWindow>
+					<Tri
+						style={{
+							position: "absolute",
+							top: "680px",
+							right: "66px",
+							transform: "rotate(90deg)",
+						}}
+					/>
+					<MicWindow>음성인식으로 병원을 쉽게 검색하세요.</MicWindow>
+				</CoachBackground>
+			)}
 		</>
 	);
 };
@@ -305,7 +329,7 @@ const Container = styled.div`
 	overflow-y: auto;
 	display: flex;
 	padding: 20em 0 20em 0;
-	z-index: 10;
+	z-index: 12;
 	position: absolute;
 	top: 70.5em;
 	left: 18em;
@@ -325,7 +349,7 @@ const Mic = styled.div`
 	border-radius: 24em;
 	background-color: #2c4eb2;
 	box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
-	z-index: 10;
+	z-index: 12;
 	position: absolute;
 	bottom: ${(props) => (props.state ? "105em" : "35em")};
 	right: 16em;
@@ -403,6 +427,17 @@ const Background = styled.div`
 	height: 100%;
 	position: fixed;
 	background: rgba(16, 16, 16, 0.7);
+	z-index: 13;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+const CoachBackground = styled.div`
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(16, 16, 16, 0.7);
 	z-index: 11;
 	top: 0;
 	display: flex;
@@ -476,4 +511,38 @@ const ModalButton = styled.div`
 	border-radius: 4px;
 	justify-content: center;
 	align-items: center;
+`;
+
+const TextWindow = styled.div`
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+	color: #ffffff;
+	font-size: 16px;
+	line-height: 18px;
+	width: 311px;
+	height: 38px;
+	top: 200px;
+	background: #3178ff;
+	position: absolute;
+	border-radius: 30px;
+`;
+const MicWindow = styled.div`
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+	color: #ffffff;
+	font-size: 16px;
+	line-height: 18px;
+	width: 277px;
+	height: 38px;
+	top: 664px;
+	left: 10px;
+	background: #3178ff;
+	position: absolute;
+	border-radius: 30px;
 `;
